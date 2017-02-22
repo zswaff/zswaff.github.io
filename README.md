@@ -1,4 +1,3 @@
 # zswaff.github.io
-My personal website
-
-www.zackswafford.com links to this
+GitHub pages for my personal website
+www.zswaff.github.io and www.zackswafford.com
