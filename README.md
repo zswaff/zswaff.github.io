@@ -1,2 +1,2 @@
 # zswaff.github.io
-GitHub Pages for [my website](zswaff.com)
+GitHub Pages for [my website](https://zswaff.com)
