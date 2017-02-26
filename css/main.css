@@ -33,8 +33,10 @@ header .header-content .header-content-inner h1 {
     font-weight: 300;
 }
 
-header .header-content .header-content-inner 1 {
+header .header-content .header-content-inner a {
     margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
     font-size: 16px;
     font-weight: 300;
     color: rgba(255,255,255,.7);
