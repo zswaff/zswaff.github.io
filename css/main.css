@@ -54,9 +54,8 @@ header .header-content .header-content-inner h1 {
 }
 
 header .header-content .header-content-inner a {
-    margin-bottom: 50px;
-    margin-left: 50px;
-    margin-right: 50px;
+    display: block;
+    margin: 10px 50px;
     font-size: 24px;
     font-weight: 300;
     text-decoration:  none;
@@ -91,6 +90,11 @@ header .header-content .header-content-inner a {
         margin-left: auto;
         max-width: 80%;
         font-size: 18px;
+    }
+
+    header .header-content .header-content-inner a {
+        display: inline;
+        margin: 0 50px;
     }
 }
 
