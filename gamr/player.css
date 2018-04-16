@@ -1,0 +1,15 @@
+#spinner-container {
+    width: 400px;
+    height: 400px;
+    margin: auto;
+    margin-top: 100px;
+    border: 2px solid #DDDDDD;
+    border-radius: 50%;
+    background: #F8F8F8;
+}
+
+#spinner {
+    width: 250px;
+    height: 250px;
+    transform-origin: 50% 80%;
+}
