@@ -11,5 +11,38 @@
 #spinner {
     width: 250px;
     height: 250px;
-    transform-origin: 50% 80%;
+    transform-origin: 50% 72%;
+}
+
+@media only screen and (min-height: 850px) {
+    #spinner-container {
+        width: 500px;
+        height: 500px;
+    }
+    #spinner {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media only screen and (min-height: 1000px) {
+    #spinner-container {
+        width: 650px;
+        height: 650px;
+    }
+    #spinner {
+        width: 390px;
+        height: 300px;
+    }
+}
+
+@media only screen and (min-height: 1200px and min-width: 1050px) {
+    #spinner-container {
+        width: 850px;
+        height: 850px;
+    }
+    #spinner {
+        width: 510px;
+        height: 510px;
+    }
 }
