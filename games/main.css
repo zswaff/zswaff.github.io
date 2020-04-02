@@ -62,6 +62,10 @@ body {
     color: #666666;
 }
 
-.action { 
+.action {
     margin-top: 50px;
+    margin-bottom: 50px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
