@@ -13,13 +13,24 @@ const spin = (() => {
     const cy = height / 2;
     const r = Math.min(cx, cy);
 
-    let spinIntervalId;
+    let spinIntervalId = null;
     let startRotation = Math.random() * 360;
     let currRotation = startRotation;
+
+    const nPlayers = 3;
+    const anglePerPlayer = 360 / nPlayers;
 
 
     function toRadians(valInDegrees) {
         return valInDegrees / 180 * Math.PI;
+    }
+
+
+    function mod(numer, denom) {
+        if (numer < 0) {
+            return numer - denom * Math.floor(numer / denom);
+        }
+        return numer % denom;
     }
 
 
@@ -34,6 +45,21 @@ const spin = (() => {
         canvas.strokeStyle = '#DDDDDD';
         canvas.stroke();
 
+        if (nPlayers > 1) {
+            for(let i = 0; i < nPlayers; i++) {
+                debugger;
+                canvas.beginPath();
+                canvas.moveTo(cx, cy);
+                const angle = toRadians((90 + (anglePerPlayer * (i - .5))) % 360);
+                const rx = cx + r * Math.cos(angle);
+                const ry = cy + r * Math.sin(angle);
+                canvas.lineTo(rx, ry);
+                canvas.lineWidth = 1;
+                canvas.strokeStyle = '#DDDDDD';
+                canvas.stroke();
+            }
+        }
+
         canvas.beginPath();
         canvas.arc(cx, cy, 10, 0, toRadians(360));
         canvas.fillStyle = '#000000';
@@ -41,8 +67,8 @@ const spin = (() => {
 
         canvas.beginPath();
         canvas.moveTo(cx, cy);
-        const xScale = - Math.sin(toRadians(currRotation));
-        const yScale = Math.cos(toRadians(currRotation));
+        const xScale = Math.cos(toRadians(currRotation));
+        const yScale = Math.sin(toRadians(currRotation));
         const lx = cx + lineLength * xScale;
         const ly = cy + lineLength * yScale;
         canvas.lineTo(lx, ly);
@@ -60,7 +86,7 @@ const spin = (() => {
         const c2x = lx + tipHalfWidth * yScale;
         const c2y = ly - tipHalfWidth * xScale;
         canvas.lineTo(c2x,c2y);
-        canvas.lineWidth = 1;
+        canvas.fillStyle = '#000000';
         canvas.fill();
     }
     draw();
@@ -85,10 +111,10 @@ const spin = (() => {
             if (t <= tFinal) {
                 if (t < tFinal) {
                     const deltaRotation = ((1/3) * a * (t ** 3)) + ((1/2) * b * (t ** 2)) + (c * t);
-                    currRotation = (startRotation + deltaRotation) % 360;
+                    currRotation = mod(startRotation + deltaRotation, 360);
                 }
                 else {
-                    currRotation = (startRotation + goalDelta) % 360;
+                    currRotation = mod(startRotation + goalDelta, 360);
                 }
                 draw();
             }
