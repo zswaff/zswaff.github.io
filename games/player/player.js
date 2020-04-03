@@ -1,4 +1,4 @@
-const spin = (() => {
+const spinner = (() => {
     const a = .00005;
     const lineLength = 240;
     const tipLenth = 40;
@@ -17,7 +17,7 @@ const spin = (() => {
     let startRotation = Math.random() * 360;
     let currRotation = startRotation;
 
-    const nPlayers = 3;
+    const nPlayers = 1;
     const anglePerPlayer = 360 / nPlayers;
 
 
@@ -46,18 +46,26 @@ const spin = (() => {
         canvas.stroke();
 
         if (nPlayers > 1) {
-            for(let i = 0; i < nPlayers; i++) {
-                debugger;
+            for (let i = 0; i < nPlayers; i++) {
                 canvas.beginPath();
                 canvas.moveTo(cx, cy);
                 const angle = toRadians((90 + (anglePerPlayer * (i - .5))) % 360);
-                const rx = cx + r * Math.cos(angle);
-                const ry = cy + r * Math.sin(angle);
+                const rx = cx + ((r - 2) * Math.cos(angle));
+                const ry = cy + ((r - 2) * Math.sin(angle));
                 canvas.lineTo(rx, ry);
                 canvas.lineWidth = 1;
                 canvas.strokeStyle = '#DDDDDD';
                 canvas.stroke();
             }
+
+            const cPlayer = Math.floor(mod(currRotation - 90 + (anglePerPlayer / 2), 360) / anglePerPlayer);
+            const startAngle = (90 + (anglePerPlayer * (cPlayer - .5))) % 360;
+            const endAngle = (startAngle + anglePerPlayer) % 360;
+            canvas.beginPath();
+            canvas.arc(cx, cy, r - 2, toRadians(startAngle), toRadians(endAngle));
+            canvas.lineTo(cx, cy);
+            canvas.fillStyle = '#DDDDDD';
+            canvas.fill();
         }
 
         canvas.beginPath();
@@ -92,7 +100,7 @@ const spin = (() => {
     draw();
 
 
-    return () => {
+    function spin() {
         const goalDelta = Math.random() * 720 + 1080;
         const b = - ((24 * (a ** 2) * goalDelta) ** (1/3));
         const c = (b ** 2) / (4 * a);
@@ -123,4 +131,5 @@ const spin = (() => {
             }
         }
     }
+    return {'draw': draw, 'spin': spin};
 })();

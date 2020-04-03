@@ -1,7 +1,7 @@
 function selectWithoutReplacement(arr, n) {
     const inds = new Set();
     const res = [];
-    for(let i = 0; i < n; i++) {
+    for (let i = 0; i < n; i++) {
         const ind = Math.floor(Math.random() * arr.length);
         if (inds.has(ind)) {
             i--;
