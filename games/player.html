@@ -22,7 +22,12 @@
     <canvas id="spinner" width=600 height=600></canvas>
     
     <div class="action">
-        <button onclick="spinner.spin()">Spin</button>
+        <div>
+            <input id="player-counter" type="number" min="1" max="30" value="1" oninput="spinner.draw();" onchange="spinner.validate();">
+        </div>
+        <div>
+            <button onclick="spinner.spin();">Spin</button>
+        </div>
     </div>
 </body>
 </html>

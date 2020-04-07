@@ -1,4 +1,5 @@
 const spinner = (() => {
+    const maxPlayers = 30;
     const a = .00005;
     const lineLength = 240;
     const tipLenth = 40;
@@ -13,12 +14,12 @@ const spinner = (() => {
     const cy = height / 2;
     const r = Math.min(cx, cy);
 
+    const playerCounter = document.getElementById('player-counter');
+    let playerCount = 1;
+
     let spinIntervalId = null;
     let startRotation = Math.random() * 360;
     let currRotation = startRotation;
-
-    const nPlayers = 1;
-    const anglePerPlayer = 360 / nPlayers;
 
 
     function toRadians(valInDegrees) {
@@ -34,7 +35,31 @@ const spinner = (() => {
     }
 
 
+    function getPlayerCount() {
+        const strVal = playerCounter.value;
+        if (!strVal) {
+            return 1;
+        }
+        const intVal = parseInt(strVal);
+        if (isNaN(intVal) || intVal < 1) {
+            return 1;
+        }
+        if (intVal > maxPlayers) {
+            return maxPlayers;
+        }
+        return intVal;
+    }
+
+
+    function validate() {
+        playerCounter.value = getPlayerCount();
+    }
+
+
     function draw() {
+        playerCount = getPlayerCount();
+        const anglePerPlayer = 360 / playerCount;
+
         canvas.clearRect(0, 0, width, height);
 
         canvas.beginPath();
@@ -45,8 +70,8 @@ const spinner = (() => {
         canvas.strokeStyle = '#DDDDDD';
         canvas.stroke();
 
-        if (nPlayers > 1) {
-            for (let i = 0; i < nPlayers; i++) {
+        if (playerCount > 1) {
+            for (let i = 0; i < playerCount; i++) {
                 canvas.beginPath();
                 canvas.moveTo(cx, cy);
                 const angle = toRadians((90 + (anglePerPlayer * (i - .5))) % 360);
@@ -131,5 +156,5 @@ const spinner = (() => {
             }
         }
     }
-    return {'draw': draw, 'spin': spin};
+    return {'validate': validate, 'draw': draw, 'spin': spin};
 })();

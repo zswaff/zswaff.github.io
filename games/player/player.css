@@ -7,3 +7,11 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+#player-counter {
+    width: 50px;
+    margin-bottom: 10px; 
+    font-size: 24px;
+    text-align: right;
+    border: none;
+}
