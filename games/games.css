@@ -25,25 +25,41 @@ button {
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 24px;
+    border: 1px solid #DDDDDD;
     border-radius: 3px;
+    background-color: #F8F8F8;
 }
 
 button:hover {
     cursor: pointer;
+    background-color: #DDDDDD;
+}
+
+button:focus {
+    /*background-color: #DDDDDD;*/
 }
 
 body {
+    height: 100%;
+    margin: 0px;
     text-align: center;
 }
 
-.content {
+#title {
+    padding: 40px 0px 20px 0px;
+}
+
+#content {
     width: 600px;
     display: inline-block;
     text-align: left;
 }
 
-.title {
-    margin: 40px 0px 20px 0px;
+#action {
+    padding: 20px 0px 20px 0px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 .links {
@@ -61,12 +77,4 @@ body {
 
 .link a:hover {
     color: #666666;
-}
-
-.action {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
 }

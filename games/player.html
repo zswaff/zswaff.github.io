@@ -15,15 +15,23 @@
     <script src="player/player.js" defer></script>
 </head>
 <body>
-    <div class="title">
+    <div id="title">
         <h1>Player Randomizer</h1>
     </div>
 
-    <canvas id="spinner" width=600 height=600></canvas>
+    <div id="content">
+        <canvas id="spinner"></canvas>
+    </div>
     
-    <div class="action">
-        <div>
-            <input id="player-counter" type="number" min="1" max="30" value="1" oninput="spinner.draw();" onchange="spinner.validate();">
+    <div id="action">
+        <div id="player-counter-wrapper">
+            <div class="player-counter-component">
+                <input type="number" id="player-counter" min="1" max="30" value="1" oninput="spinner.draw();" onchange="spinner.validate();">
+            </div>
+            <div class="player-counter-component">
+                <button class="scroll-button" onclick="spinner.increment(1);">&#11014;</button>
+                <button class="scroll-button" onclick="spinner.increment(-1);">&#11015;</button> 
+            </div>
         </div>
         <div>
             <button onclick="spinner.spin();">Spin</button>

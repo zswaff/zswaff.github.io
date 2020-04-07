@@ -1,18 +1,15 @@
 const spinner = (() => {
     const maxPlayers = 30;
     const a = .00005;
-    const lineLength = 240;
-    const tipLenth = 40;
-    const tipWidth = 40;
-    const tipHalfWidth = tipWidth / 2;
 
-    const spinner = document.getElementById('spinner')
+    const spinner = document.getElementById('spinner');
     const canvas = spinner.getContext('2d');
-    const width = spinner.width;
-    const height = spinner.height;
-    const cx = width / 2;
-    const cy = height / 2;
-    const r = Math.min(cx, cy);
+    let width, height, cx, cy, r, lineLength, tipSize, tipSizeHalf;
+
+    const usedWidth = 50;
+    const title = document.getElementById('title');
+    const action = document.getElementById('action');
+    const usedHeight = Math.max(title.offsetHeight, action.offsetHeight) * 2;
 
     const playerCounter = document.getElementById('player-counter');
     let playerCount = 1;
@@ -66,8 +63,8 @@ const spinner = (() => {
         canvas.arc(cx, cy, r - 2, 0, toRadians(360));
         canvas.fillStyle = '#F8F8F8';
         canvas.fill();
-        canvas.lineWidth = 2;
-        canvas.strokeStyle = '#DDDDDD';
+        canvas.lineWidth = 1;
+        canvas.strokeStyle = '#AAAAAA';
         canvas.stroke();
 
         if (playerCount > 1) {
@@ -79,7 +76,7 @@ const spinner = (() => {
                 const ry = cy + ((r - 2) * Math.sin(angle));
                 canvas.lineTo(rx, ry);
                 canvas.lineWidth = 1;
-                canvas.strokeStyle = '#DDDDDD';
+                canvas.strokeStyle = '#AAAAAA';
                 canvas.stroke();
             }
 
@@ -110,19 +107,43 @@ const spinner = (() => {
         canvas.stroke();
 
         canvas.beginPath();
-        const tx = lx + tipLenth * xScale;
-        const ty = ly + tipLenth * yScale;
+        const tx = lx + tipSize * xScale;
+        const ty = ly + tipSize * yScale;
         canvas.moveTo(tx, ty);
-        const c1x = lx - tipHalfWidth * yScale;
-        const c1y = ly + tipHalfWidth * xScale;
+        const c1x = lx - tipSizeHalf * yScale;
+        const c1y = ly + tipSizeHalf * xScale;
         canvas.lineTo(c1x,c1y);
-        const c2x = lx + tipHalfWidth * yScale;
-        const c2y = ly - tipHalfWidth * xScale;
+        const c2x = lx + tipSizeHalf * yScale;
+        const c2y = ly - tipSizeHalf * xScale;
         canvas.lineTo(c2x,c2y);
         canvas.fillStyle = '#000000';
         canvas.fill();
     }
-    draw();
+
+
+    function resizeWindow() {
+        width = window.innerWidth - usedWidth;
+        height = window.innerHeight - usedHeight;
+        canvas.canvas.width = width;
+        canvas.canvas.height = height;
+        cx = width / 2;
+        cy = height / 2;
+        r = Math.min(cx, cy);
+        lineLength = r * (4 / 5);
+        tipSize = r * (2 / 15);
+        tipSizeHalf = tipSize / 2;
+
+        draw();
+    }
+    resizeWindow();
+    window.addEventListener('resize', resizeWindow);
+
+
+    function increment(amount) {
+        playerCounter.value = getPlayerCount() + amount;
+        validate();
+        draw();
+    }
 
 
     function spin() {
@@ -156,5 +177,5 @@ const spinner = (() => {
             }
         }
     }
-    return {'validate': validate, 'draw': draw, 'spin': spin};
+    return {'validate': validate, 'draw': draw, 'increment': increment, 'spin': spin};
 })();

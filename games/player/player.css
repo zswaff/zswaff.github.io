@@ -1,6 +1,25 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.player-counter-component {
+    display: inline-block;
+}
+
+.scroll-button {
+    display: block;
+    min-width: 30px;
+    width: 30px;
+    height: 30px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 0px;
+    font-size: 20px;
+}
+
 #spinner {
-    width: 600px;
-    height: 600px;
     margin: 0;
     position: absolute;
     top: 50%;
@@ -8,10 +27,16 @@
     transform: translate(-50%, -50%);
 }
 
+#player-counter-wrapper {
+    margin-bottom: 10px;
+}
+
 #player-counter {
-    width: 50px;
-    margin-bottom: 10px; 
+    position: relative;
+    bottom: 15px;
+    width: 35px;
     font-size: 24px;
     text-align: right;
     border: none;
 }
+
