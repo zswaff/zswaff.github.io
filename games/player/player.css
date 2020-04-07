@@ -10,13 +10,11 @@ input::-webkit-inner-spin-button {
 
 .scroll-button {
     display: block;
-    min-width: 30px;
-    width: 30px;
-    height: 30px;
+    width: 60px;
+    height: 60px;
     margin-top: 2px;
     margin-bottom: 2px;
     padding: 0px;
-    font-size: 20px;
 }
 
 #spinner {
@@ -33,9 +31,10 @@ input::-webkit-inner-spin-button {
 
 #player-counter {
     position: relative;
-    bottom: 15px;
-    width: 35px;
-    font-size: 24px;
+    bottom: 35px;
+    width: 50px;
+    margin-right: 5px;
+    font-size: 42px;
     text-align: right;
     border: none;
 }

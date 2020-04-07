@@ -6,10 +6,10 @@ const spinner = (() => {
     const canvas = spinner.getContext('2d');
     let width, height, cx, cy, r, lineLength, tipSize, tipSizeHalf;
 
-    const usedWidth = 50;
     const title = document.getElementById('title');
     const action = document.getElementById('action');
-    const usedHeight = Math.max(title.offsetHeight, action.offsetHeight) * 2;
+    const usedWidth = 40;
+    let usedHeight;
 
     const playerCounter = document.getElementById('player-counter');
     let playerCount = 1;
@@ -122,6 +122,7 @@ const spinner = (() => {
 
 
     function resizeWindow() {
+        usedHeight = Math.max(title.offsetHeight, action.offsetHeight) * 2;
         width = window.innerWidth - usedWidth;
         height = window.innerHeight - usedHeight;
         canvas.canvas.width = width;
