@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Coup G54 Card Randomizer</title>
+    <link rel="shortcut icon" href="../images/meeple.ico">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+
+    <link href="games.css" rel="stylesheet">
+    <link href="coup/coup.css" rel="stylesheet">
+
+    <script src="games.js" defer></script>
+    <script src="coup/coup.js" defer></script>
+</head>
+<body>
+    <div class="title">
+        <h1>Coup G54 Card Randomizer</h1>
+    </div>
+
+    <div class="content">
+        <h5>Communications</h5>
+        <div id="communications" class=cards></div>
+        <h5>Finance</h5>
+        <div id="finance" class=cards></div>
+        <h5>Force</h5>
+        <div id="force" class=cards></div>
+        <h5>Special Interest</h5>
+        <div id="special-interest-0" class=cards></div>
+        <div id="special-interest-1" class=cards></div>
+    </div>
+
+    <div class="action">
+        <button onclick="randomize()">Randomize</button>
+    </div>
+</body>
+</html>
