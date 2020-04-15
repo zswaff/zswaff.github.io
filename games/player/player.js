@@ -1,6 +1,7 @@
 const spinner = (() => {
-    const maxPlayers = 30;
-    const a = .00005;
+    const a = .00002;
+    const minCycles = 4;
+    const maxCycles = 10;
 
     const spinner = document.getElementById('spinner');
     const canvas = spinner.getContext('2d');
@@ -32,29 +33,8 @@ const spinner = (() => {
     }
 
 
-    function getPlayerCount() {
-        const strVal = playerCounter.value;
-        if (!strVal) {
-            return 1;
-        }
-        const intVal = parseInt(strVal);
-        if (isNaN(intVal) || intVal < 1) {
-            return 1;
-        }
-        if (intVal > maxPlayers) {
-            return maxPlayers;
-        }
-        return intVal;
-    }
-
-
-    function validate() {
-        playerCounter.value = getPlayerCount();
-    }
-
-
     function draw() {
-        playerCount = getPlayerCount();
+        playerCount = parseInt(playerCounter.value);
         const anglePerPlayer = 360 / playerCount;
 
         canvas.clearRect(0, 0, width, height);
@@ -140,15 +120,8 @@ const spinner = (() => {
     window.addEventListener('resize', resizeWindow);
 
 
-    function increment(amount) {
-        playerCounter.value = getPlayerCount() + amount;
-        validate();
-        draw();
-    }
-
-
     function spin() {
-        const goalDelta = Math.random() * 720 + 1080;
+        const goalDelta = 360 * (Math.random() * (maxCycles - minCycles) + minCycles);
         const b = - ((24 * (a ** 2) * goalDelta) ** (1/3));
         const c = (b ** 2) / (4 * a);
         const tFinal = Math.floor(- (b / (2 * a))) + 1; 
@@ -178,5 +151,5 @@ const spinner = (() => {
             }
         }
     }
-    return {'validate': validate, 'draw': draw, 'increment': increment, 'spin': spin};
+    return {'draw': draw, 'spin': spin};
 })();
