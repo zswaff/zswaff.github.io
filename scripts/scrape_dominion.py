@@ -20,7 +20,7 @@ def main():
     r_table = r_html.find('table', {'class': 'wikitable'})
 
     cards = []
-    sets = {}
+    set_links = {}
     for r_row in r_table.find_all('tr')[1:]:
         name_td, set_td = r_row.find_all('td')[:2]
 
@@ -33,21 +33,24 @@ def main():
         set_ = set_a.text
         set_link = BASE_URL + set_a['href']
 
-        cards.append({
+        cards.append((set_, {
             'name': name,
             'link': link,
-            'imgLink': img_link,
-            'set': set_
-        })
-        sets[set_] = set_link
+            'imgLink': img_link
+        }))
+        set_links[set_] = set_link
 
-    sets = [{'set': k, 'setLink': v} for k, v in sets.items()]
+    sets = {
+        k: {
+            'link': v,
+            'cards': sorted([e for set_, e in cards if set_ == k], key=lambda x: x['name'])
+        }
+        for k, v in set_links.items()
+    }
 
-    s_sets = json.dumps(sorted(sets, key=lambda x: x['set']), indent=4).replace('"', '\'')
-    s_cards = json.dumps(sorted(cards, key=lambda x: x['name']), indent=4).replace('"', '\'')
-
+    s_sets = json.dumps(sets, indent=4, sort_keys=True)
     with open(OUT_PATH, 'w+') as fout:
-        fout.write(f'const allSets = {s_sets};\n\nconst allCards = {s_cards};\n')
+        fout.write(f'const allCards = {s_sets};\n')
 
 
 if __name__ == '__main__':
