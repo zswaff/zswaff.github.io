@@ -1,7 +1,16 @@
 const spinner = (() => {
-    const a = .00002;
-    const minCycles = 4;
-    const maxCycles = 10;
+    const colors = {
+        'background': '#F8F8F8',
+        'border': '#AAAAAA',
+        'highlight': '#DDDDDD',
+        'arrow': '#000000'
+    };
+
+    const frictionConst = .09;
+    const distEps = .5;
+
+    const minCycles = 12;
+    const maxCycles = 15;
 
     const spinner = document.getElementById('spinner');
     const canvas = spinner.getContext('2d');
@@ -18,6 +27,7 @@ const spinner = (() => {
     let spinIntervalId = null;
     let startRotation = Math.random() * 360;
     let currRotation = startRotation;
+    let moving = false;
 
 
     function toRadians(valInDegrees) {
@@ -41,10 +51,10 @@ const spinner = (() => {
 
         canvas.beginPath();
         canvas.arc(cx, cy, r - 2, 0, toRadians(360));
-        canvas.fillStyle = '#F8F8F8';
+        canvas.fillStyle = colors.background;
         canvas.fill();
         canvas.lineWidth = 1;
-        canvas.strokeStyle = '#AAAAAA';
+        canvas.strokeStyle = colors.border;
         canvas.stroke();
 
         if (playerCount > 1) {
@@ -56,23 +66,25 @@ const spinner = (() => {
                 const ry = cy + ((r - 2) * Math.sin(angle));
                 canvas.lineTo(rx, ry);
                 canvas.lineWidth = 1;
-                canvas.strokeStyle = '#AAAAAA';
+                canvas.strokeStyle = colors.border;
                 canvas.stroke();
             }
 
-            const cPlayer = Math.floor(mod(currRotation - 90 + (anglePerPlayer / 2), 360) / anglePerPlayer);
-            const startAngle = (90 + (anglePerPlayer * (cPlayer - .5))) % 360;
-            const endAngle = (startAngle + anglePerPlayer) % 360;
-            canvas.beginPath();
-            canvas.arc(cx, cy, r - 2, toRadians(startAngle), toRadians(endAngle));
-            canvas.lineTo(cx, cy);
-            canvas.fillStyle = '#DDDDDD';
-            canvas.fill();
+            if (!moving) {
+                const cPlayer = Math.floor(mod(currRotation - 90 + (anglePerPlayer / 2), 360) / anglePerPlayer);
+                const startAngle = (90 + (anglePerPlayer * (cPlayer - .5))) % 360;
+                const endAngle = (startAngle + anglePerPlayer) % 360;
+                canvas.beginPath();
+                canvas.arc(cx, cy, r - 2, toRadians(startAngle), toRadians(endAngle));
+                canvas.lineTo(cx, cy);
+                canvas.fillStyle = colors.highlight;
+                canvas.fill();
+            }
         }
 
         canvas.beginPath();
         canvas.arc(cx, cy, 10, 0, toRadians(360));
-        canvas.fillStyle = '#000000';
+        canvas.fillStyle = colors.arrow;
         canvas.fill();
 
         canvas.beginPath();
@@ -83,7 +95,7 @@ const spinner = (() => {
         const ly = cy + lineLength * yScale;
         canvas.lineTo(lx, ly);
         canvas.lineWidth = 7;
-        canvas.strokeStyle = '#000000';
+        canvas.strokeStyle = colors.arrow;
         canvas.stroke();
 
         canvas.beginPath();
@@ -96,7 +108,7 @@ const spinner = (() => {
         const c2x = lx + tipSizeHalf * yScale;
         const c2y = ly - tipSizeHalf * xScale;
         canvas.lineTo(c2x,c2y);
-        canvas.fillStyle = '#000000';
+        canvas.fillStyle = colors.arrow;
         canvas.fill();
     }
 
@@ -121,35 +133,39 @@ const spinner = (() => {
 
 
     function spin() {
-        const goalDelta = 360 * (Math.random() * (maxCycles - minCycles) + minCycles);
-        const b = - ((24 * (a ** 2) * goalDelta) ** (1/3));
-        const c = (b ** 2) / (4 * a);
-        const tFinal = Math.floor(- (b / (2 * a))) + 1; 
+        /*
+        a = - c_1 * v - c_2 * a
+        => v(t) = v_i - d_1 * e^(-t / d_2)
+        => p(t) = p_f * (1 - e^(-t / (p_f * k)))
+        where k is a frictional constant
+        */
 
+        const finalDeltaRotation = 360 * (Math.random() * (maxCycles - minCycles) + minCycles);
+        const expDenom = finalDeltaRotation * frictionConst;
+
+        moving = true;
         startRotation = currRotation;
         let t = 0;
+
+        function step() {
+            t++;
+            const deltaRotation = finalDeltaRotation * (1 - Math.exp(-t / expDenom));
+            if (finalDeltaRotation - deltaRotation > distEps) {
+                currRotation = mod(startRotation + deltaRotation + distEps, 360);
+            }
+            else {
+                currRotation = mod(startRotation + finalDeltaRotation, 360);
+                clearInterval(spinIntervalId);
+                spinIntervalId = null;
+                moving = false;
+            }
+            draw();
+        }
 
         if (spinIntervalId) {
             clearInterval(spinIntervalId);
         }
         spinIntervalId = setInterval(step, 5);
-
-        function step() {
-            t++;
-            if (t <= tFinal) {
-                if (t < tFinal) {
-                    const deltaRotation = ((1/3) * a * (t ** 3)) + ((1/2) * b * (t ** 2)) + (c * t);
-                    currRotation = mod(startRotation + deltaRotation, 360);
-                }
-                else {
-                    currRotation = mod(startRotation + goalDelta, 360);
-                }
-                draw();
-            }
-            else {
-                clearInterval(spinIntervalId);
-            }
-        }
     }
     return {'draw': draw, 'spin': spin};
 })();
