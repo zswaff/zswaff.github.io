@@ -9,44 +9,26 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 
     <link href="games.css" rel="stylesheet">
+    <link href="dominion/dominion.css" rel="stylesheet">
 
     <script src="games.js" defer></script>
     <script src="dominion/const.js" defer></script>
     <script src="dominion/dominion.js" defer></script>
 </head>
 <body>
-    <div class="title">
+    <div id="title">
         <h1>Dominion Card Randomizer</h1>
     </div>
 
-    <div class="content">
-        <h2>Base</h2>
-        <div id="base"></div>
-        <h2>Intrigue</h2>
-        <div id="intrigue"></div>
-        <h2>Seaside</h2>
-        <div id="seaside"></div>
-        <h2>Alchemy</h2>
-        <div id="alchemy"></div>
-        <h2>Properity</h2>
-        <div id="prosperity"></div>
-        <h2>Cornucopia</h2>
-        <div id="cornucopia"></div>
-        <h2>Hinterlands</h2>
-        <div id="hinterlands"></div>
-        <h2>Dark Ages</h2>
-        <div id="dark-ages"></div>
-        <h2>Guilds</h2>
-        <div id="guilds"></div>
-        <h2>Adventures</h2>
-        <div id="adventures"></div>
-        <h2>Empires</h2>
-        <div id="empires"></div>
-        <h2>Nocturne</h2>
-        <div id="nocturne"></div>
+    <div id="sidebar"></div>
+
+    <div id="content">
+        <div id="text"></div>
+
+        <div id="images"></div>
     </div>
 
-    <div class="action">
+    <div id="action">
         <button onclick="randomize()">Randomize</button>
     </div>
 </body>

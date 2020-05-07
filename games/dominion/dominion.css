@@ -1,0 +1,30 @@
+.set-picker-title {
+    display: inline;
+}
+
+.img-card {
+    width: 150px;
+}
+
+#sidebar {
+    position: absolute;
+    width: 200px;
+    margin-left: 20px;
+    text-align: left;
+}
+
+#content {
+    padding-left: 220px;
+    padding-right: 220px;
+    padding-bottom: 200px;
+}
+
+#text {
+    width: 200px;
+    margin: auto;
+}
+
+#images {
+    width: 770px;
+    margin: auto;
+}
