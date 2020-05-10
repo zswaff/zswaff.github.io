@@ -402,29 +402,9 @@ const allCards = {
                 "name": "Chapel"
             },
             {
-                "imgLink": "http://wiki.dominionstrategy.com/images/f/fb/Copper.jpg",
-                "link": "http://wiki.dominionstrategy.com/index.php/Copper",
-                "name": "Copper"
-            },
-            {
                 "imgLink": "http://wiki.dominionstrategy.com/images/e/e0/Council_Room.jpg",
                 "link": "http://wiki.dominionstrategy.com/index.php/Council_Room",
                 "name": "Council Room"
-            },
-            {
-                "imgLink": "http://wiki.dominionstrategy.com/images/9/97/Curse.jpg",
-                "link": "http://wiki.dominionstrategy.com/index.php/Curse",
-                "name": "Curse"
-            },
-            {
-                "imgLink": "http://wiki.dominionstrategy.com/images/4/4a/Duchy.jpg",
-                "link": "http://wiki.dominionstrategy.com/index.php/Duchy",
-                "name": "Duchy"
-            },
-            {
-                "imgLink": "http://wiki.dominionstrategy.com/images/9/91/Estate.jpg",
-                "link": "http://wiki.dominionstrategy.com/index.php/Estate",
-                "name": "Estate"
             },
             {
                 "imgLink": "http://wiki.dominionstrategy.com/images/9/9c/Feast.jpg",
@@ -440,11 +420,6 @@ const allCards = {
                 "imgLink": "http://wiki.dominionstrategy.com/images/8/8c/Gardens.jpg",
                 "link": "http://wiki.dominionstrategy.com/index.php/Gardens",
                 "name": "Gardens"
-            },
-            {
-                "imgLink": "http://wiki.dominionstrategy.com/images/5/50/Gold.jpg",
-                "link": "http://wiki.dominionstrategy.com/index.php/Gold",
-                "name": "Gold"
             },
             {
                 "imgLink": "http://wiki.dominionstrategy.com/images/3/32/Harbinger.jpg",
@@ -497,11 +472,6 @@ const allCards = {
                 "name": "Poacher"
             },
             {
-                "imgLink": "http://wiki.dominionstrategy.com/images/8/81/Province.jpg",
-                "link": "http://wiki.dominionstrategy.com/index.php/Province",
-                "name": "Province"
-            },
-            {
                 "imgLink": "http://wiki.dominionstrategy.com/images/2/2e/Remodel.jpg",
                 "link": "http://wiki.dominionstrategy.com/index.php/Remodel",
                 "name": "Remodel"
@@ -510,11 +480,6 @@ const allCards = {
                 "imgLink": "http://wiki.dominionstrategy.com/images/4/4c/Sentry.jpg",
                 "link": "http://wiki.dominionstrategy.com/index.php/Sentry",
                 "name": "Sentry"
-            },
-            {
-                "imgLink": "http://wiki.dominionstrategy.com/images/5/5d/Silver.jpg",
-                "link": "http://wiki.dominionstrategy.com/index.php/Silver",
-                "name": "Silver"
             },
             {
                 "imgLink": "http://wiki.dominionstrategy.com/images/3/36/Smithy.jpg",
@@ -2307,11 +2272,6 @@ const allCards = {
                 "name": "City"
             },
             {
-                "imgLink": "http://wiki.dominionstrategy.com/images/6/60/Colony.jpg",
-                "link": "http://wiki.dominionstrategy.com/index.php/Colony",
-                "name": "Colony"
-            },
-            {
                 "imgLink": "http://wiki.dominionstrategy.com/images/5/58/Contraband.jpg",
                 "link": "http://wiki.dominionstrategy.com/index.php/Contraband",
                 "name": "Contraband"
@@ -2375,11 +2335,6 @@ const allCards = {
                 "imgLink": "http://wiki.dominionstrategy.com/images/6/6f/Peddler.jpg",
                 "link": "http://wiki.dominionstrategy.com/index.php/Peddler",
                 "name": "Peddler"
-            },
-            {
-                "imgLink": "http://wiki.dominionstrategy.com/images/7/72/Platinum.jpg",
-                "link": "http://wiki.dominionstrategy.com/index.php/Platinum",
-                "name": "Platinum"
             },
             {
                 "imgLink": "http://wiki.dominionstrategy.com/images/6/65/Quarry.jpg",

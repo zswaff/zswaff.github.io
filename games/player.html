@@ -15,6 +15,10 @@
     <script src="player/player.js" defer></script>
 </head>
 <body>
+    <div id="back" class="link">
+        <a href="games"><h1>&larr;</h1></a>
+    </div>
+
     <div id="title">
         <h1>Player Randomizer</h1>
     </div>
@@ -59,7 +63,7 @@
             </select>
         </div>
         <div>
-            <button onclick="spinner.spin();">Spin</button>
+            <button id="action-button" onclick="spinner.spin();">Spin</button>
         </div>
     </div>
 </body>

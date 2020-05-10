@@ -13,6 +13,18 @@ IMAGES_RPATH = '/images'
 
 OUT_PATH = '../games/dominion/const.js'
 
+EXCLUDED_CARDS = {
+    'Copper',
+    'Silver',
+    'Gold',
+    'Platinum',
+    'Curse',
+    'Estate',
+    'Duchy',
+    'Province',
+    'Colony'
+}
+
 
 def main():
     page = requests.get(f'{BASE_URL}{CARDS_RPATH}')
@@ -26,6 +38,9 @@ def main():
 
         name_a = name_td.find('a')
         name = name_a.text
+        if name in EXCLUDED_CARDS:
+            continue
+
         link = BASE_URL + name_a['href']
         img_link = f'{BASE_URL}{IMAGES_RPATH}/' + '/'.join(name_td.find('img')['src'].split('/')[3:6])
 

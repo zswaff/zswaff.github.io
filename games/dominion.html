@@ -16,20 +16,23 @@
     <script src="dominion/dominion.js" defer></script>
 </head>
 <body>
+    <div id="back" class="link">
+        <a href="games"><h1>&larr;</h1></a>
+    </div>
+
     <div id="title">
         <h1>Dominion Card Randomizer</h1>
     </div>
 
-    <div id="sidebar"></div>
-
     <div id="content">
-        <div id="text"></div>
-
         <div id="images"></div>
     </div>
 
+    <div id="left-sidebar"></div>
+    <div id="right-sidebar"></div>
+
     <div id="action">
-        <button onclick="dominion.randomize()">Randomize</button>
+        <button id="action-button" onclick="dominion.randomize()">Randomize</button>
     </div>
 </body>
 </html>

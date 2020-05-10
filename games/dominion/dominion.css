@@ -2,14 +2,29 @@
     display: inline;
 }
 
+.set-picker-counter {
+    float: right;
+}
+
 .img-card {
     width: 150px;
 }
 
-#sidebar {
+#left-sidebar {
     position: absolute;
+    top: 118px;
+    left: 0px;
     width: 200px;
-    margin-left: 20px;
+    padding: 0px 20px 0px 20px;
+    text-align: left;
+}
+
+#right-sidebar {
+    position: absolute;
+    top: 118px;
+    right: 0px;
+    width: 200px;
+    padding: 0px 20px 0px 20px;
     text-align: left;
 }
 
