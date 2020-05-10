@@ -60,8 +60,10 @@ const dominion = (() => {
     function updateSetCount(elem) {
         setAmounts[elem.dataset.set] = parseInt(elem.value);
         const cardTotal = getTotalCards();
+        const okCount = cardTotal === 10;
         totalBox.innerHTML = cardTotal;
-        submitButton.disabled = cardTotal !== 10;
+        totalBox.style.color = okCount ? 'black' : 'red';
+        submitButton.disabled = !okCount;
     }
 
 
