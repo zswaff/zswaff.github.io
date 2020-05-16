@@ -1,20 +1,41 @@
+h2 {
+    font-size: 30px;
+}
+
+ul {
+    padding-inline-start: 30px;
+    font-size: 20px;
+}
+
 .set-picker-title {
     display: inline;
 }
 
 .set-picker-counter {
     float: right;
+    font-size: 26px;
+    border: 1px solid #DDDDDD;
+    border-radius: 3px;
 }
 
 .img-card {
     width: 150px;
 }
 
+#content {
+    display: block;
+    width: auto;
+    max-width: 770px;
+    margin: auto;
+    padding: 0px 280px 0px 280px;
+    text-align: center;
+}
+
 #left-sidebar {
     position: absolute;
     top: 118px;
     left: 0px;
-    width: 200px;
+    width: 240px;
     padding: 0px 20px 0px 20px;
     text-align: left;
 }
@@ -23,15 +44,9 @@
     position: absolute;
     top: 118px;
     right: 0px;
-    width: 200px;
+    width: 240px;
     padding: 0px 20px 0px 20px;
     text-align: left;
-}
-
-#content {
-    padding-left: 220px;
-    padding-right: 220px;
-    padding-bottom: 200px;
 }
 
 #text {
@@ -39,7 +54,13 @@
     margin: auto;
 }
 
-#images {
-    width: 770px;
-    margin: auto;
+#total-title {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+#total-count {
+    float: right;
+    display: inline-block;
+    margin-top: 15px;
 }

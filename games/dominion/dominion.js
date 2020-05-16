@@ -6,7 +6,7 @@ const dominion = (() => {
 
     const leftSidebar = document.getElementById('left-sidebar');
     const rightSidebar = document.getElementById('right-sidebar');
-    const images = document.getElementById('images');
+    const content = document.getElementById('content');
     const submitButton = document.getElementById('action-button');
 
 
@@ -24,7 +24,7 @@ const dominion = (() => {
         container.setAttribute('class', 'set-picker-container');
         const title = document.createElement('h2');
         title.setAttribute('class', 'set-picker-title');
-        title.appendChild(document.createTextNode(set));
+        title.innerHTML = set;
         container.appendChild(title);
         const picker = document.createElement('select');
         picker.setAttribute('class', 'set-picker-counter');
@@ -46,13 +46,12 @@ const dominion = (() => {
     const container = document.createElement('div');
     container.setAttribute('class', 'set-picker-container');
     const title = document.createElement('h2');
-    title.setAttribute('class', 'set-picker-title');
-    title.appendChild(document.createTextNode('Total'));
+    title.setAttribute('id', 'total-title');
+    title.innerHTML = 'Total';
     container.appendChild(title);
     const totalBox = document.createElement('h2');
-    totalBox.setAttribute('id', 'total');
-    totalBox.setAttribute('class', 'set-picker-counter');
-    totalBox.appendChild(document.createTextNode(getTotalCards()));
+    totalBox.setAttribute('id', 'total-count');
+    totalBox.innerHTML = getTotalCards();
     container.appendChild(totalBox);
     leftSidebar.appendChild(container);
 
@@ -69,7 +68,7 @@ const dominion = (() => {
 
     function randomize() {
         rightSidebar.innerHTML = '';
-        images.innerHTML = '';
+        content.innerHTML = '';
 
         Object.keys(setAmounts).forEach(function(set) {
             const amount = setAmounts[set];
@@ -79,7 +78,7 @@ const dominion = (() => {
 
             const title = document.createElement('h2');
             title.setAttribute('class', 'set-title');
-            title.appendChild(document.createTextNode(set));
+            title.innerHTML = set;
             rightSidebar.appendChild(title);
 
             const setCards = allCards[set].cards;
@@ -91,14 +90,14 @@ const dominion = (() => {
             chosenCards.forEach(function(card) {
                 const item = document.createElement('li');
                 item.setAttribute('class', 'set-item');
-                item.appendChild(document.createTextNode(card.name));
+                item.innerHTML = card.name;
                 list.appendChild(item);
 
                 const image = document.createElement('img');
                 image.setAttribute('class', 'img-card');
                 image.setAttribute('src', card.imgLink);
                 image.setAttribute('alt', card.name);
-                images.appendChild(image);
+                content.appendChild(image);
             });
             rightSidebar.appendChild(list);
         });
