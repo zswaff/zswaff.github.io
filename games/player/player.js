@@ -6,11 +6,11 @@ const spinner = (() => {
         'arrow': '#000000'
     };
 
-    const frictionConst = .09;
+    const frictionConst = .15;
     const distEps = .5;
 
-    const minCycles = 12;
-    const maxCycles = 15;
+    const minCycles = 6;
+    const maxCycles = 9;
 
     const spinner = document.getElementById('spinner');
     const canvas = spinner.getContext('2d');
