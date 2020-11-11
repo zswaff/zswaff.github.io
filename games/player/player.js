@@ -1,33 +1,110 @@
 const spinner = (() => {
+    const urlMatcher = /([^&=]+)=?([^&]*)/g;
+
     const colors = {
         'background': '#F8F8F8',
         'border': '#AAAAAA',
         'highlight': '#DDDDDD',
         'arrow': '#000000'
     };
-
-    const frictionConst = .15;
     const distEps = .5;
 
-    const minCycles = 6;
-    const maxCycles = 9;
+    const speedUrlParamName = 'speed';
+    const defaultSpeed = 'fast';
+    const speedParams = {
+        'fast': {
+            'frictionConst': .05,
+            'minCycles': 3,
+            'maxCycles': 6
+        },
+        'slow': {
+            'frictionConst': .1,
+            'minCycles': 12,
+            'maxCycles': 15
+        }
+    };
 
     const spinner = document.getElementById('spinner');
     const canvas = spinner.getContext('2d');
-    let width, height, cx, cy, r, lineLength, tipSize, tipSizeHalf;
-
     const title = document.getElementById('title');
     const action = document.getElementById('action');
+    const playerCounter = document.getElementById('player-counter');
+
     const usedWidth = 40;
+
+
+    let urlRoot;
+    let urlParams;
+
+    let width, height, cx, cy, r, lineLength, tipSize, tipSizeHalf;
     let usedHeight;
 
-    const playerCounter = document.getElementById('player-counter');
+    let speed;
+    let frictionConst, minCycles, maxCycles;
+
     let playerCount = 1;
 
     let spinIntervalId = null;
     let startRotation = Math.random() * 360;
     let currRotation = startRotation;
     let moving = false;
+
+
+    function parseUrlParams() {
+        const url = window.location.search.substring(1);
+
+        urlRoot = null;
+        urlParams = {};
+
+        let match;
+        while (match = urlMatcher.exec(url)) {
+            if (urlRoot === null) {
+                urlRoot = match[0];
+            }
+            let key = decodeURIComponent(match[1]);
+            if (key in urlParams) {
+                if (!Array.isArray(urlParams[key])) {
+                    urlParams[key] = [urlParams[key]];
+                }
+                urlParams[key].push(decodeURIComponent(match[2]));
+            } else {
+                urlParams[key] = decodeURIComponent(match[2]);
+            }
+        }
+    }
+
+
+    function setDefaultUrlParams() {
+        let newUrlParams = {};
+
+        speed = urlParams[speedUrlParamName];
+        if (!(speed in speedParams)) {
+            speed = defaultSpeed;
+        }
+        newUrlParams[speedUrlParamName] = speed;
+
+        urlParams = newUrlParams;
+        let newUrl = window.location.pathname.split('/').pop() + '?'
+            + Object.entries(newUrlParams)
+                .map(([k,v]) => `${k}=${v}`)
+                .join('&');
+        history.pushState({}, '', newUrl);
+    }
+
+
+    function updateSpeedParams() {
+        frictionConst = speedParams[speed].frictionConst;
+        minCycles = speedParams[speed].minCycles;
+        maxCycles = speedParams[speed].maxCycles;
+    }
+
+
+    function manageUrlParams() {
+        parseUrlParams();
+        setDefaultUrlParams();
+        updateSpeedParams();
+    }
+    manageUrlParams();
 
 
     function toRadians(valInDegrees) {
