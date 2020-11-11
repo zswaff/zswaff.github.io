@@ -11,7 +11,7 @@ const spinner = (() => {
 
     const speedUrlParamName = 'speed';
     const defaultSpeed = 'fast';
-    const speedParams = {
+    const speedControls = {
         'fast': {
             'frictionConst': .05,
             'minCycles': 3,
@@ -27,6 +27,7 @@ const spinner = (() => {
     const spinner = document.getElementById('spinner');
     const canvas = spinner.getContext('2d');
     const title = document.getElementById('title');
+    const speedSwitch = document.getElementById('speed-switch');
     const action = document.getElementById('action');
     const playerCounter = document.getElementById('player-counter');
 
@@ -50,7 +51,16 @@ const spinner = (() => {
     let moving = false;
 
 
-    function parseUrlParams() {
+    function setUrlParams() {
+        let newUrl = window.location.pathname.split('/').pop() + '?'
+            + Object.entries(urlParams)
+                .map(([k,v]) => `${k}=${v}`)
+                .join('&');
+        history.pushState({}, '', newUrl);
+    }
+
+
+    function loadUrlParams() {
         const url = window.location.search.substring(1);
 
         urlRoot = null;
@@ -71,40 +81,34 @@ const spinner = (() => {
                 urlParams[key] = decodeURIComponent(match[2]);
             }
         }
-    }
 
 
-    function setDefaultUrlParams() {
         let newUrlParams = {};
-
-        speed = urlParams[speedUrlParamName];
-        if (!(speed in speedParams)) {
-            speed = defaultSpeed;
+        let tSpeed = urlParams[speedUrlParamName];
+        if (!(tSpeed in speedControls)) {
+            tSpeed = defaultSpeed;
         }
-        newUrlParams[speedUrlParamName] = speed;
+        newUrlParams[speedUrlParamName] = tSpeed;
 
         urlParams = newUrlParams;
-        let newUrl = window.location.pathname.split('/').pop() + '?'
-            + Object.entries(newUrlParams)
-                .map(([k,v]) => `${k}=${v}`)
-                .join('&');
-        history.pushState({}, '', newUrl);
+        setUrlParams();
     }
 
 
-    function updateSpeedParams() {
-        frictionConst = speedParams[speed].frictionConst;
-        minCycles = speedParams[speed].minCycles;
-        maxCycles = speedParams[speed].maxCycles;
+    function updateSpeedControls() {
+        speed = urlParams[speedUrlParamName];
+        frictionConst = speedControls[speed].frictionConst;
+        minCycles = speedControls[speed].minCycles;
+        maxCycles = speedControls[speed].maxCycles;
+        speedSwitch.checked = speed === 'fast';
     }
 
 
-    function manageUrlParams() {
-        parseUrlParams();
-        setDefaultUrlParams();
-        updateSpeedParams();
+    function initFromUrlParams() {
+        loadUrlParams();
+        updateSpeedControls();
     }
-    manageUrlParams();
+    initFromUrlParams();
 
 
     function toRadians(valInDegrees) {
@@ -209,6 +213,18 @@ const spinner = (() => {
     window.addEventListener('resize', resizeWindow);
 
 
+    function changeSpeed() {
+        urlParams[speedUrlParamName] = speedSwitch.checked ? 'fast' : 'slow';
+        setUrlParams();
+        updateSpeedControls();
+    }
+
+
+    function changePlayerCount() {
+        draw();
+    }
+
+
     function spin() {
         /*
         a = - c_1 * v - c_2 * a
@@ -244,5 +260,11 @@ const spinner = (() => {
         }
         spinIntervalId = setInterval(step, 5);
     }
-    return {'draw': draw, 'spin': spin};
+
+
+    return {
+        'changeSpeed': changeSpeed,
+        'changePlayerCount': changePlayerCount,
+        'spin': spin
+    };
 })();
