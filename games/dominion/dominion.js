@@ -70,6 +70,7 @@ const dominion = (() => {
         rightSidebar.innerHTML = '';
         content.innerHTML = '';
 
+        let listCounter = 1;
         Object.keys(setAmounts).forEach(function(set) {
             const amount = setAmounts[set];
             if (amount == 0) {
@@ -85,19 +86,30 @@ const dominion = (() => {
             const chosenCards = selectWithoutReplacement(setCards, amount);
             chosenCards.sort((a, b) => a.name.localeCompare(b.name));
 
-            const list = document.createElement('ul');
+            const list = document.createElement('ol');
             list.setAttribute('class', 'set-item-list');
+            list.setAttribute('start', listCounter);
             chosenCards.forEach(function(card) {
+                listCounter++;
+
                 const item = document.createElement('li');
                 item.setAttribute('class', 'set-item');
-                item.innerHTML = card.name;
+                const itemLink = document.createElement('a');
+                itemLink.setAttribute('href', card.link);
+                itemLink.setAttribute('target', '_blank');
+                itemLink.innerHTML = card.name;
+                item.appendChild(itemLink);
                 list.appendChild(item);
 
-                const image = document.createElement('img');
-                image.setAttribute('class', 'img-card');
-                image.setAttribute('src', card.imgLink);
-                image.setAttribute('alt', card.name);
-                content.appendChild(image);
+                const imgLink = document.createElement('a');
+                imgLink.setAttribute('href', card.link);
+                imgLink.setAttribute('target', '_blank');
+                const img = document.createElement('img');
+                img.setAttribute('class', 'img-card');
+                img.setAttribute('src', card.imgLink);
+                img.setAttribute('alt', card.name);
+                imgLink.appendChild(img);
+                content.appendChild(imgLink);
             });
             rightSidebar.appendChild(list);
         });

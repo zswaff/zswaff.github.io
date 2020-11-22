@@ -59,12 +59,12 @@ body {
     margin: 10px 0px 10px 0px;
 }
 
-.link a {
+a {
     color: black;
     text-decoration: none;
 }
 
-.link a:hover {
+a:hover {
     color: #666666;
 }
 

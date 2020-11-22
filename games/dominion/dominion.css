@@ -2,7 +2,7 @@ h2 {
     font-size: 30px;
 }
 
-ul {
+ol {
     padding-inline-start: 30px;
     font-size: 20px;
 }
@@ -20,12 +20,13 @@ ul {
 
 .img-card {
     width: 150px;
+    margin: 10px;
 }
 
 #content {
     display: block;
     width: auto;
-    max-width: 770px;
+    max-width: 870px;
     margin: auto;
     padding: 0px 280px 0px 280px;
     text-align: center;
