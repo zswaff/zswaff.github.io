@@ -22,10 +22,16 @@ const dominion = (() => {
         const amount = setAmounts[set];
         const container = document.createElement('div');
         container.setAttribute('class', 'set-picker-container');
+
+        const setLink = document.createElement('a');
+        setLink.setAttribute('href', allCards[set].link);
+        setLink.setAttribute('target', '_blank');
         const title = document.createElement('h2');
         title.setAttribute('class', 'set-picker-title');
         title.innerHTML = set;
-        container.appendChild(title);
+        setLink.appendChild(title);
+        container.appendChild(setLink);
+
         const picker = document.createElement('select');
         picker.setAttribute('class', 'set-picker-counter');
         picker.setAttribute('data-set', set);
@@ -37,7 +43,7 @@ const dominion = (() => {
             if (i == amount) {
                 option.setAttribute('selected', '');
             }
-            picker.appendChild(option)
+            picker.appendChild(option);
         }
         container.appendChild(picker);
 
