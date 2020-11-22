@@ -11,7 +11,8 @@ BASE_URL = 'http://wiki.dominionstrategy.com'
 CARDS_RPATH = '/index.php/Cards'
 IMAGES_RPATH = '/images'
 
-OUT_PATH = '../games/dominion/const.js'
+IMAGE_OUT_PATH_FMT = '../games/dominion/images/{}'
+CONST_OUT_PATH = '../games/dominion/const.js'
 
 EXCLUDED_CARDS = {
     'Copper',
@@ -42,16 +43,25 @@ def main():
             continue
 
         link = BASE_URL + name_a['href']
-        img_link = f'{BASE_URL}{IMAGES_RPATH}/' + '/'.join(name_td.find('img')['src'].split('/')[3:6])
+        img_link_elems = name_td.find('img')['src'].split('/')[3:6]
+        fname = img_link_elems[-1]
+        img_link = f'{BASE_URL}{IMAGES_RPATH}/' + '/'.join(img_link_elems)
+        img_out_path = IMAGE_OUT_PATH_FMT.format(fname)
+        new_img_link = img_out_path[2:]
+
+        img_res = requests.get(img_link)
+        with open(img_out_path, 'wb+') as fout:
+            fout.write(img_res.content)
 
         set_a = set_td.find('a')
         set_ = set_a.text
         set_link = BASE_URL + set_a['href']
 
+        print(name)
         cards.append((set_, {
             'name': name,
             'link': link,
-            'imgLink': img_link
+            'imgLink': new_img_link
         }))
         set_links[set_] = set_link
 
@@ -64,7 +74,7 @@ def main():
     }
 
     s_sets = json.dumps(sets, indent=4, sort_keys=True)
-    with open(OUT_PATH, 'w+') as fout:
+    with open(CONST_OUT_PATH, 'w+') as fout:
         fout.write(f'const allCards = {s_sets};\n')
 
 
