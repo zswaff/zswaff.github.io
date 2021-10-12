@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Betting Odds to Probabilities</title>
+  <link rel="shortcut icon" href="../images/headshot.ico">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="betting-odds-to-probabilities">Betting Odds to Probabilities</h1>
+<h2 id="background">Background</h2>
+<p>This post is about converting bookie-given odds to actual probabilities of outcomes, and vice versa. It has the math and the calculator to help understand how to convert these numbers.</p>
+<h2 id="definitions">Definitions</h2>
+<p>Define <span class="math inline">\(P_i\)</span> as the bookie-perceived probability that the <span class="math inline">\(i\)</span>th outcome will happen and <span class="math inline">\(D_i\)</span> as the monetary multiple a bettor would win back (in addition to their principle) according to those odds. Also, let’s call <span class="math inline">\(v_i\)</span> the vig on bet <span class="math inline">\(i\)</span> and assume that the bookie wants to keep the same vig across all outcomes, so <span class="math inline">\(v_i = v\)</span> for some constant <span class="math inline">\(v\)</span> for all <span class="math inline">\(i\)</span>.</p>
+<p>As a note, if the odds on outcome <span class="math inline">\(i\)</span> are <span class="math inline">\(O_i\)</span>, then the <span class="math inline">\(D\)</span>s are related to the <span class="math inline">\(O\)</span>s with</p>
+<p><span class="math display">\[
+D_i =
+\begin{cases}
+    \frac{O_i}{100} &amp; \text{if } O_i &gt; 100 \\
+    -\frac{100}{O_i} &amp; \text{otherwise}.
+\end{cases}
+\]</span></p>
+<h2 id="two-outcomes">Two Outcomes</h2>
+<p>Because the probabilities of the outcomes must sum to one, we have that <span class="math display">\[P_1 + P_2 = 1.\]</span> The expected value for the bookie for an outcome <span class="math inline">\(i\)</span> (i.e. the vig) the money they get if that outcome does not happen less the money they must pay if it does, i.e. <span class="math display">\[v_i = (1 - P_i) - P_i D_i.\]</span> Defining <span class="math inline">\(E_i \equiv D_i + 1\)</span>, we have that <span class="math inline">\(v_i = 1 - P_i E_i\)</span>. Because all <span class="math inline">\(v\)</span>s are equal,</p>
+<p><span class="math display">\[
+\begin{align*}
+    v = v_i &amp;= v_2 \\
+    1 - P_1 E_1 &amp;= 1 - P_2 E_2 \\
+    P_1 E_1 &amp;= P_2 E_2
+\end{align*}
+\]</span></p>
+<p>Solving for <span class="math inline">\(P_1\)</span>, we find that</p>
+<p><span class="math display">\[
+\begin{align*}
+    P_1 E_1 &amp;= (1 - P_1) E_2 \\
+    P_1 E_1 &amp;= E_2 - P_1 E_2 \\
+    P_1 E_1 + P_1 E_2 &amp;= E_2 \\
+    P_1 (E_1 + E_2) &amp;= E_2 \\
+    P_1 &amp;= \frac{E_2}{E_1 + E_2}.
+\end{align*}
+\]</span></p>
+<p>Once this is calculated, it is easy to see that <span class="math display">\[P_2 = \frac{P_1 E_1}{E_2}.\]</span></p>
+<h2 id="n-outcomes"><span class="math inline">\(n\)</span> Outcomes</h2>
+<p>Define <span class="math inline">\(n\)</span> as the number of players. Then our first relation is that <span class="math display">\[\sum_{i=1}^n P_i = 1\]</span> and our other relations are that <span class="math inline">\(P_1 E_1 = P_i E_i\)</span> for all <span class="math inline">\(i\)</span>, or</p>
+<p><span class="math display">\[
+\begin{align*}
+    P_3 &amp;= P_1 E_1 E_3^{-1} \\
+    P_4 &amp;= P_1 E_1 E_4^{-1} \\
+    &amp;\ \ \vdots \\
+    P_n &amp;= P_1 E_1 E_n^{-1}.
+\end{align*}
+\]</span></p>
+<p>Starting with the first relation, and defining <span class="math inline">\(R \equiv \sum_{i=1}^n E_i^{-1}\)</span>, we have that</p>
+<p><span class="math display">\[
+\begin{align*}
+    P_1 E_1 &amp;= P_2 E_2 \\
+    &amp;= E_2 (1 - P_1 - P_3 - P_4 - \ldots - P_n) \\
+    &amp;= E_2 - E_2 (P_1 E_1 E_1^{-1} + P_3 + P_4 + \ldots + P_n) \\
+    &amp;= E_2 - E_2 (P_1 E_1 E_1^{-1} + P_1 E_1 E_3^{-1} + P_1 E_1 E_4^{-1} + \ldots + P_1 E_1 E_n^{-1}) \\
+    &amp;= E_2 - P_1 E_1 E_2 (E_1^{-1} + E_3^{-1} + E_4^{-1} + \ldots + E_n^{-1}) \\
+    &amp;= E_2 - P_1 E_1 E_2 (R - E_2^{-1}) \\
+    P_1 E_1 + P_1 E_1 E_2 (R - E_2^{-1}) &amp;= E_2 \\
+    P_1 (E_1 + E_1 E_2 (R - E_2^{-1})) &amp;= E_2 \\
+\end{align*}
+\]</span></p>
+<p>and therefore <span class="math display">\[P_1 = E_1^{-1} E_2 (E_2 (R - E_2^{-1}) + 1)^{-1}.\]</span></p>
+<p>As before, <span class="math display">\[P_i = \frac{P_1 E_1}{E_i}\]</span> for all <span class="math inline">\(i \ne 1\)</span>.</p>
+<h2 id="bookies-perspective">Bookie’s Perspective</h2>
+<p>A bookie would start with <span class="math inline">\(v\)</span> and the <span class="math inline">\(P_i\)</span>s and then want to calculate the <span class="math inline">\(O_i\)</span>s for each outcome. Reversing the work above, we can say that <span class="math display">\[D_i = \frac{1 - P_i - v}{P_i}\]</span> and, from there, that</p>
+<p><span class="math display">\[
+O_i =
+\begin{cases}
+    100 D_i &amp; \text{if } D_i &gt; 1 \\
+    -\frac{100}{D_i} &amp; \text{otherwise}.
+\end{cases}
+\]</span></p>
+<h2 id="conclusions">Conclusions</h2>
+<ol type="1">
+<li>Here is a <a href="https://docs.google.com/spreadsheets/d/1-WcaV6dlHZJobGscnMgCdTyyX9yfJCoPODv6nh3_Q64/edit#gid=0">calculator</a> I made that implements all of this</li>
+<li>It is interesting to note that the more cases are add, the more a bookie makes</li>
+<li>A bookie can never have a <span class="math inline">\(v\)</span> such that <span class="math inline">\(P_i + v &gt;= 1\)</span> for any <span class="math inline">\(i\)</span>, which makes intuitive sense</li>
+</ol>
+</body>
+</html>
