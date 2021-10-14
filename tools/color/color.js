@@ -1,9 +1,11 @@
 (() => {
-    const defaultColor = '000000';
-    const urlParams = new URLSearchParams(location.search);
-    let color = urlParams.get('q') || defaultColor;
-    if (color.length != 6 || isNaN(parseInt(color, 16))) {
-        color = defaultColor;
+    const params = new URLSearchParams(location.search);
+    const color = params.get('q');
+    if (color === null || color.length != 6 || isNaN(parseInt(color, 16))) {
+        location.search = '?q=' + Math.floor(Math.random() * parseInt('1000000', 16)).toString(16).padStart(6, '0');
     }
-    const main = document.documentElement.style.backgroundColor = '#' + color;
+    if (Array.from(params).length > 1) {
+        location.search = '?q=' + color;
+    }
+    document.documentElement.style.backgroundColor = '#' + color;
 })();
