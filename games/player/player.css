@@ -63,7 +63,7 @@ input:checked + .slider:before {
 }
 
 #player-counter {
-    width: 100px;
+    width: 150px;
     margin-bottom: 10px;
     font-size: 42px;
     border: 1px solid #DDDDDD;
