@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Betting Odds to Probabilities</title>
-  <link rel="shortcut icon" href="../images/headshot.ico">
+  <link rel="icon" href="../images/headshot.png" type="image/png">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <style>
     html {
@@ -156,7 +156,7 @@
 <h2 id="background">Background</h2>
 <p>This post is about converting bookie-given odds to actual probabilities of outcomes, and vice versa. It has the math and the calculator to help understand how to convert these numbers.</p>
 <h2 id="definitions">Definitions</h2>
-<p>Define <span class="math inline">\(P_i\)</span> as the bookie-perceived probability that the <span class="math inline">\(i\)</span>th outcome will happen and <span class="math inline">\(D_i\)</span> as the monetary multiple a bettor would win back (in addition to their principle) according to those odds. Also, let’s call <span class="math inline">\(v_i\)</span> the vig on bet <span class="math inline">\(i\)</span> and assume that the bookie wants to keep the same vig across all outcomes, so <span class="math inline">\(v_i = v\)</span> for some constant <span class="math inline">\(v\)</span> for all <span class="math inline">\(i\)</span>.</p>
+<p>Define <span class="math inline">\(P_i\)</span> as the bookie-perceived probability that the <span class="math inline">\(i\)</span>th outcome will happen and <span class="math inline">\(D_i\)</span> as the monetary multiple a bettor would win back (in addition to their principal) according to those odds. Also, let’s call <span class="math inline">\(v_i\)</span> the vig on bet <span class="math inline">\(i\)</span> and assume that the bookie wants to keep the same vig across all outcomes, so <span class="math inline">\(v_i = v\)</span> for some constant <span class="math inline">\(v\)</span> for all <span class="math inline">\(i\)</span>.</p>
 <p>As a note, if the odds on outcome <span class="math inline">\(i\)</span> are <span class="math inline">\(O_i\)</span>, then the <span class="math inline">\(D\)</span>s are related to the <span class="math inline">\(O\)</span>s with</p>
 <p><span class="math display">\[
 D_i =
@@ -166,7 +166,7 @@ D_i =
 \end{cases}
 \]</span></p>
 <h2 id="two-outcomes">Two Outcomes</h2>
-<p>Because the probabilities of the outcomes must sum to one, we have that <span class="math display">\[P_1 + P_2 = 1.\]</span> The expected value for the bookie for an outcome <span class="math inline">\(i\)</span> (i.e. the vig) the money they get if that outcome does not happen less the money they must pay if it does, i.e. <span class="math display">\[v_i = (1 - P_i) - P_i D_i.\]</span> Defining <span class="math inline">\(E_i \equiv D_i + 1\)</span>, we have that <span class="math inline">\(v_i = 1 - P_i E_i\)</span>. Because all <span class="math inline">\(v\)</span>s are equal,</p>
+<p>Because the probabilities of the outcomes must sum to one, we have that <span class="math display">\[P_1 + P_2 = 1.\]</span> The expected value for the bookie for an outcome <span class="math inline">\(i\)</span> (i.e. the vig) is the money they get if that outcome does not happen less the money they must pay if it does, i.e. <span class="math display">\[v_i = (1 - P_i) - P_i D_i.\]</span> Defining <span class="math inline">\(E_i \equiv D_i + 1\)</span>, we have that <span class="math inline">\(v_i = 1 - P_i E_i\)</span>. Because all <span class="math inline">\(v\)</span>s are equal,</p>
 <p><span class="math display">\[
 \begin{align*}
     v = v_i &amp;= v_2 \\
